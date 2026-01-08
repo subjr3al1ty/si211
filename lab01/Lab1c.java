@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Lab1b {
+public class Lab1c {
     public static int factorial(int k) {
     int tot = 1;
     for(int i = k; i > 0; i--)
@@ -20,13 +20,16 @@ public class Lab1b {
     return tot;
   }
   public static void main(String[] args) {
-    Scanner in = new Scanner(System.in);
-    System.out.print("Enter your name: ");
-    String userName = in.nextLine();
-    System.out.print("Please input an integer ");
-    int n = in.nextInt();
-    System.out.print("Please input a second integer ");
-    int k = in.nextInt();
+    String name = "";
+    for(int i = 0; i < args.length - 3; i++)
+    {
+      name += args[i] + " ";
+    }
+    name += args[args.length - 3];
+    
+
+    int n = Integer.parseInt(args[args.length - 2]);
+    int k = Integer.parseInt(args[args.length - 1]);
     System.out.println("The two ints were " + n + " and " + k);
     
     //denominator
@@ -43,6 +46,6 @@ public class Lab1b {
     int odds = num / denom;
     double calc = 1.0 / (double)odds;
     System.out.println("odds = 1 in " + odds + " = " + calc);
-    System.out.println("Goodbye " + userName + ".");
+    System.out.println("Goodbye " + name + ".");
   }
 }
