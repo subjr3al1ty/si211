@@ -1,0 +1,62 @@
+.PHONY: runnerbuild runner
+
+build1:	
+	 javac *.java
+
+run1:    # submit uses this to test stdout output
+	 @java TestEncryptors
+
+run1err:
+	@java TestEncryptors 2>&1 >/dev/null | grep -Eq 'Exception in thread "main"' && echo "Terminated with exception" || echo "Did not terminate with an exception" 
+	
+build2:	
+	 javac *.java
+
+run2:    # submit uses this to test stdout output
+	 @java TestHashers
+
+run2err:
+	@java TestHashers 2>&1 >/dev/null | grep -Eq 'Exception in thread "main"' && echo "Terminated with exception" || echo "Did not terminate with an exception" 
+	
+	
+build3:	runnerbuild
+	 javac *.java
+
+build4:	runnerbuild
+	 javac *.java ; cp -f vault4 vault4copy	 ; cp -f vault3 vault3copy
+
+run4chkA:   runnerbuild # 1st line of input is comm to run, rest is input to that comm
+	 @./runner 2>&1 >/dev/null ; /bin/echo -e "\nChecking sorted contents of vault4copy afterwards ..." | cat - vault4copy | LC_COLLATE="C" sort
+
+run4chkB:   runnerbuild # 1st line of input is comm to run, rest is input to that comm
+	 @./runner 2>&1 >/dev/null ; /bin/echo -e "\nChecking sorted contents of vault3copy afterwards ..." | cat - vault3copy | LC_COLLATE="C" sort
+
+build5:	runnerbuild
+	 javac *.java
+
+
+run5:   runnerbuild # 1st line of input is comm to run, rest is input to that comm
+	 @./runner 2>&1
+
+############################################################################
+### IMPORTANT!!!! setting  LC_COLLATE="C" before sort is necessary to ensure
+###               that uppercase letters go before lowercase!
+############################################################################
+
+build6:	runnerbuild
+	 javac *.java ; cp -f vault6a vault6acopy; cp -f vaultX vaultXcopy
+
+run6chkA:   runnerbuild # 1st line of input is comm to run, rest is input to that comm
+	 @./runner 2>&1 >/dev/null ; /bin/echo -e "\nChecking sorted contents of vault6acopy afterwards ..." | cat - vault6acopy | LC_COLLATE="C" sort
+
+run6chkB:   runnerbuild # 1st line of input is comm to run, rest is input to that comm
+	 @./runner 2>&1 >/dev/null ; /bin/echo -e "\nChecking sorted contents of vaultXcopy afterwards ..." | cat - vaultXcopy | LC_COLLATE="C" sort
+
+
+
+runnerbuild: 
+	     @gcc -o runner runner.c
+
+runner:   runnerbuild # 1st line of input is comm to run, rest is input to that comm
+	 @./runner 2>&1 || true
+

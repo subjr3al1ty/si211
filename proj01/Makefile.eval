@@ -1,0 +1,25 @@
+.PHONY: build5 run5 build6 run6col run6str runerr runinA
+
+build:	
+	 tar xfz si211.tgz && cd si211 && javac DrBrown.java && cd .. && javac *.java
+
+run:    # submit uses this to test stdout output
+	 @java Proj01 sections.txt
+	
+run11:    # submit uses this to test stdout output
+	 @java Proj01 sections11.txt
+	
+runCS:    # submit uses this to test stdout output
+	 @java Proj01 sectionsCS.txt	
+	
+runMix:    # submit uses this to test stdout output
+	 @java Proj01 sectionsMix.txt	
+	
+runW:    # submit uses this to test stdout output
+	 @java Week
+	
+runerr: # submit uses this to test stderr output
+	@java HW02 2>&1 >/dev/null || true
+
+runinA:
+	@./hw07 inA.spl

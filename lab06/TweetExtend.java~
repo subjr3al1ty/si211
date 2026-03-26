@@ -1,0 +1,31 @@
+//extender class :)
+
+import si211.*;
+import java.util.*;
+
+public class TweetExtend extends TweetQueue {
+  public void dumpFunc() {
+    TweetQueue.Iter rawr = iterator();
+    while(rawr.hasNext()) {
+      System.out.println(rawr.next().toString());
+    }
+  }
+
+  public void resetFunc() {
+    TweetQueue.Iter rawrz = iterator();
+  }
+
+  public TweetExtend filternorm(String s) {
+    TweetQueue.Iter woof = iterator();
+    TweetExtend moo = new TweetExtend();
+    int counter = 0;
+    
+
+    if(indexOf(s) != -1) {
+      moo.enqueue(woof.next());
+      counter++;
+    }
+    System.out.println(counter + " tweets");
+  }
+
+}
