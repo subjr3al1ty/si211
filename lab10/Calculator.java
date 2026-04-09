@@ -10,6 +10,18 @@ public class Calculator extends JFrame {
   private JTextField costResult;
   private final Double[] rates = {3.50, 3.75, 4.00, 4.25, 4.50, 4.75,
   5.00, 5.25, 5.50, 5.75, 6.00, 6.25, 6.50, 6.75, 7.00, 7.25, 7.50, 26.00};
+
+  public void update() {
+    double amt = Double.parseDouble(amount.getText());
+    double rate = (Double)interestRate.getSelectedItem();
+    double pay = Double.parseDouble(payment.getText());
+    
+    Calc calculation = new Calc(amt, rate, pay);
+    
+    monthsResult.setText(String.valueOf(calculation.getMonths()));
+    costResult.setText("$" + String.format("%.2f",
+					   calculation.getTotalCost()));
+  }
   
   public Calculator() {
     super("loan calculator");
@@ -53,17 +65,7 @@ public class Calculator extends JFrame {
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     calcButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        double amt = Double.parseDouble(amount.getText());
-        double rate = (Double)interestRate.getSelectedItem();
-        double pay = Double.parseDouble(payment.getText());
-
-        Calc calculation = new Calc(amt, rate, pay);
-
-        monthsResult.setText(String.valueOf(calculation.getMonths()));
-        costResult.setText("$" + String.format("%.2f",
-        calculation.getTotalCost()));
-      }
+	public void actionPerformed(ActionEvent e) { update(); }
     });
 
     this.pack();
